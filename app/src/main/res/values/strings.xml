@@ -6,4 +6,7 @@
     <string name="home_search">Search</string>
     <string name="home_cart">My Cart</string>
     <string name="home_profile">Profile</string>
+
+    <string name="label_filters">Filters</string>
+    <string name="label_select_delivery">Select delivery address</string>
 </resources>
