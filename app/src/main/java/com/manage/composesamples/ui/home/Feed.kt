@@ -16,5 +16,5 @@ fun Feed(
     val filters = remember {
         SnackRepo.getFilters()
     }
-    Text(text = "Hello")
+    
 }
