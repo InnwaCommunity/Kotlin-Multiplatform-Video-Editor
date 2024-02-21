@@ -54,4 +54,9 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.tooling)
+    implementation(libs.junit)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.junit)
 }

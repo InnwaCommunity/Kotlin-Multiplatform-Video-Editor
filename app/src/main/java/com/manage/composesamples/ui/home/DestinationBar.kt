@@ -1,5 +1,6 @@
 package com.manage.composesamples.ui.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.manage.composesamples.R
 import com.manage.composesamples.ui.components.JetsnackDivider
@@ -29,7 +31,8 @@ fun DestinationBar(modifier: Modifier = Modifier) {
     TopAppBar(
         backgroundColor = JetsnackTheme.colors.uiBackground.copy(alpha = AlphaNearOpaque),
         contentColor = JetsnackTheme.colors.textSecondary,
-        contentPadding = WindowInsets.systemBars.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top).asPaddingValues(),
+        contentPadding = WindowInsets.systemBars.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
+            .asPaddingValues(),
         elevation = 0.dp,
         modifier = modifier
     ) {
@@ -56,4 +59,14 @@ fun DestinationBar(modifier: Modifier = Modifier) {
         }
     }
     JetsnackDivider()
+}
+
+@Preview("default")
+@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview("large font", fontScale = 2f)
+@Composable
+fun PreviewDestinationBar() {
+    JetsnackTheme {
+        DestinationBar()
+    }
 }
