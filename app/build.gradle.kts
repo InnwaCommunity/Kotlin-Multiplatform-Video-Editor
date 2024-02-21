@@ -59,4 +59,5 @@ dependencies {
     implementation(libs.junit)
     implementation(libs.androidx.core)
     implementation(libs.androidx.junit)
+    implementation(libs.androidx.animation)
 }
