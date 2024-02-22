@@ -60,4 +60,5 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.junit)
     implementation(libs.androidx.animation)
+    implementation(libs.coil.compose)
 }

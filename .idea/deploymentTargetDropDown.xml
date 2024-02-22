@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="FilterDisabledPreview">
+      <entry key="CardPreview">
         <State />
       </entry>
       <entry key="FilterDisabledPreview - dark theme">
-        <State />
-      </entry>
-      <entry key="FilterDisabledPreview - default">
         <State />
       </entry>
       <entry key="HomePreview">
         <State />
       </entry>
       <entry key="HomePreview - default">
+        <State />
+      </entry>
+      <entry key="SnackCardPreview">
         <State />
       </entry>
       <entry key="app">

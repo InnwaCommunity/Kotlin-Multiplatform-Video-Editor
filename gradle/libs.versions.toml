@@ -9,6 +9,7 @@ junit = "4.13.2"
 core = "1.6.0-alpha05"
 androidx-junit = "1.2.0-alpha03"
 animation = "1.7.0-alpha02"
+coil-compose = "2.5.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
@@ -21,5 +22,6 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
 androidx-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
 
 [plugins]
