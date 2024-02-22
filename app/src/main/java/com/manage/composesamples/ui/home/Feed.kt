@@ -27,6 +27,7 @@ import com.manage.composesamples.ui.components.FilterBar
 import com.manage.composesamples.ui.components.JetsnackDivider
 import com.manage.composesamples.ui.components.JetsnackScaffold
 import com.manage.composesamples.ui.components.JetsnackSurface
+import com.manage.composesamples.ui.components.SnackCollection
 import com.manage.composesamples.ui.theme.JetsnackTheme
 
 @Composable
@@ -85,6 +86,17 @@ private fun SnackCollectionList(
                     )
                 )
                 FilterBar(filters, onShowFilters = { filtersVisible = true })
+            }
+            itemsIndexed(snackCollections) { index, snackCollection ->
+                if (index > 0) {
+                    JetsnackDivider(thickness = 2.dp)
+                }
+
+                SnackCollection(
+                    snackCollection = snackCollection,
+                    onSnackClick = onSnackClick,
+                    index = index
+                )
             }
         }
     }
