@@ -38,19 +38,23 @@ import com.manage.composesamples.ui.components.JetsnackSurface
 import com.manage.composesamples.ui.components.SnackCollection
 import com.manage.composesamples.ui.theme.JetsnackTheme
 
+
 @Composable
 fun Feed(
     onSnackClick: (Long) -> Unit,
     onNavigateToRoute: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val snackCollections = remember {
-        SnackRepo.getSnacks()
-    }
-    val filters = remember {
-        SnackRepo.getFilters()
-    }
+    val snackCollections = remember { SnackRepo.getSnacks() }
+    val filters = remember { SnackRepo.getFilters() }
     JetsnackScaffold(
+        bottomBar = {
+//            JetsnackBottomBar(
+//                tabs = HomeSections.values(),
+//                currentRoute = HomeSections.FEED.route,
+//                navigateToRoute = onNavigateToRoute
+//            )
+        },
         modifier = modifier
     ) { paddingValues ->
         Feed(
@@ -86,7 +90,8 @@ private fun SnackCollectionList(
 ) {
     var filtersVisible by rememberSaveable { mutableStateOf(false) }
     Box(modifier) {
-        LazyColumn() {
+        LazyColumn {
+
             item {
                 Spacer(
                     Modifier.windowInsetsTopHeight(
@@ -108,13 +113,16 @@ private fun SnackCollectionList(
             }
         }
     }
-    AnimatedVisibility(visible = filtersVisible,
+    AnimatedVisibility(
+        visible = filtersVisible,
         enter = slideInVertically() + expandVertically(
             expandFrom = Alignment.Top
         ) + fadeIn(initialAlpha = 0.3f),
         exit = slideOutVertically() + shrinkVertically() + fadeOut()
     ) {
-
+        FilterScreen(
+            onDismiss = { filtersVisible = false }
+        )
     }
 }
 
@@ -124,6 +132,6 @@ private fun SnackCollectionList(
 @Composable
 fun HomePreview() {
     JetsnackTheme {
-        Feed(onSnackClick = {}, onNavigateToRoute = {})
+        Feed(onSnackClick = { }, onNavigateToRoute = { })
     }
 }

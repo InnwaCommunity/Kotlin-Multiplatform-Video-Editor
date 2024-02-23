@@ -14,8 +14,16 @@ enum class CollectionType { Normal, Highlight }
 
 object SnackRepo {
     fun getSnacks(): List<SnackCollection> = snackCollections
-
+    fun getSnack(snackId: Long) = snacks.find { it.id == snackId }!!
+    fun getRelated(@Suppress("UNUSED_PARAMETER") snackId: Long) = related
+    fun getInspiredByCart() = inspiredByCart
     fun getFilters() = filters
+    fun getPriceFilters() = priceFilters
+//    fun getCart() = cart
+    fun getSortFilters() = sortFilters
+    fun getCategoryFilters() = categoryFilters
+    fun getSortDefault() = sortDefault
+    fun getLifeStyleFilters() = lifeStyleFilters
 }
 
 /**
@@ -66,4 +74,9 @@ private val snackCollections = listOf(
     wfhFavs,
     newlyAdded,
     exclusive
+)
+
+private val related = listOf(
+    also,
+    popular
 )

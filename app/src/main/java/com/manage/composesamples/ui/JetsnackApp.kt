@@ -35,7 +35,7 @@ private fun NavGraphBuilder.jetsnackNavGraph(
 ) {
     navigation(
         route = MainDestinations.HOME_ROUTE,
-        startDestination = HomeSections.Feed.route
+        startDestination = HomeSections.FEED.route
     ) {
         addHomeGraph(onSnackSelected, onNavigateToRoute)
     }

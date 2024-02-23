@@ -15,7 +15,7 @@ fun NavGraphBuilder.addHomeGraph(
     onNavigateToRoute: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    composable(HomeSections.Feed.route) { from ->
+    composable(HomeSections.FEED.route) { from ->
         Feed(onSnackClick = { id -> onSnackSelected(id, from) }, onNavigateToRoute, modifier)
     }
 }
@@ -25,5 +25,5 @@ enum class HomeSections(
     val icon: ImageVector,
     val route: String
 ) {
-    Feed(R.string.home_feed, Icons.Outlined.Home, "home/feed")
+    FEED(R.string.home_feed, Icons.Outlined.Home, "home/feed")
 }
