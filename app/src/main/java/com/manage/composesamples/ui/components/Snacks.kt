@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -103,7 +104,7 @@ fun SnackCollection(
                 onSnackClick = onSnackClick
             )
         } else {
-
+            Snacks(snacks = snackCollection.snacks, onSnackClick = onSnackClick)
         }
     }
 }
@@ -140,6 +141,58 @@ private fun HighlightedSnacks(
                 index = index,
                 gradient = gradient,
                 scrollProvider = scrollProvider
+            )
+        }
+    }
+}
+
+@Composable
+private fun Snacks(
+    snacks: List<Snack>,
+    onSnackClick: (Long) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
+    ) {
+        items(snacks) { snack ->
+            SnackItem(snack, onSnackClick)
+        }
+    }
+}
+
+@Composable
+fun SnackItem(
+    snack: Snack,
+    onSnackClick: (Long) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    JetsnackSurface(
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier.padding(
+            start = 4.dp,
+            end = 4.dp,
+            bottom = 8.dp
+        )
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .clickable(onClick = { onSnackClick(snack.id) })
+                .padding(8.dp)
+        ) {
+            SnackImage(
+                imageUrl = snack.imageUrl,
+                contentDescription = null,
+                elevation = 4.dp,
+                modifier = Modifier.size(120.dp)
+            )
+            Text(
+                text = snack.name,
+                style = MaterialTheme.typography.subtitle1,
+                color = JetsnackTheme.colors.textSecondary,
+                modifier = Modifier.padding(top = 8.dp)
             )
         }
     }
