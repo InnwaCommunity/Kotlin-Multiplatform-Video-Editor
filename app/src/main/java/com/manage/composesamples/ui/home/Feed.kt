@@ -48,13 +48,6 @@ fun Feed(
     val snackCollections = remember { SnackRepo.getSnacks() }
     val filters = remember { SnackRepo.getFilters() }
     JetsnackScaffold(
-        bottomBar = {
-//            JetsnackBottomBar(
-//                tabs = HomeSections.values(),
-//                currentRoute = HomeSections.FEED.route,
-//                navigateToRoute = onNavigateToRoute
-//            )
-        },
         modifier = modifier
     ) { paddingValues ->
         Feed(
