@@ -11,6 +11,7 @@ androidx-junit = "1.2.0-alpha03"
 animation = "1.7.0-alpha02"
 coil-compose = "2.5.0"
 ui-util = "1.7.0-alpha02"
+constraintlayout-compose = "1.1.0-alpha13"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
@@ -25,5 +26,6 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "a
 androidx-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
 androidx-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "ui-util" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose" }
 
 [plugins]

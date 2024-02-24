@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="CardPreview">
-        <State />
-      </entry>
       <entry key="FilterScreenPreview">
         <State />
       </entry>
@@ -12,6 +9,9 @@
         <State />
       </entry>
       <entry key="JetsnackBottomNavPreview">
+        <State />
+      </entry>
+      <entry key="SearchResultPreview">
         <State />
       </entry>
       <entry key="SnackCardPreview">

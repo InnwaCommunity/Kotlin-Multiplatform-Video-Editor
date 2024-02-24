@@ -1,7 +1,9 @@
 package com.manage.composesamples.ui.home
 
 import android.content.res.Configuration
+import android.os.Build
 import androidx.annotation.FloatRange
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
@@ -12,6 +14,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -23,7 +26,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,9 +58,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.manage.composesamples.R
 import com.manage.composesamples.ui.components.JetsnackSurface
+import com.manage.composesamples.ui.home.search.Search
 import com.manage.composesamples.ui.theme.JetsnackTheme
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.S)
 fun NavGraphBuilder.addHomeGraph(
     onSnackSelected: (Long, NavBackStackEntry) -> Unit,
     onNavigateToRoute: (String) -> Unit,
@@ -62,6 +70,9 @@ fun NavGraphBuilder.addHomeGraph(
 ) {
     composable(HomeSections.FEED.route) { from ->
         Feed(onSnackClick = { id -> onSnackSelected(id, from) }, onNavigateToRoute, modifier)
+    }
+    composable(HomeSections.SEARCH.route) { from ->
+        Search(onSnackClick = { id -> onSnackSelected(id, from) }, onNavigateToRoute, modifier)
     }
 }
 
@@ -71,6 +82,9 @@ enum class HomeSections(
     val route: String
 ) {
     FEED(R.string.home_feed, Icons.Outlined.Home, "home/feed"),
+    SEARCH(R.string.home_search, Icons.Outlined.Search, "home/search"),
+    CART(R.string.home_cart, Icons.Outlined.ShoppingCart, "home/cart"),
+    PROFILE(R.string.home_profile, Icons.Outlined.AccountCircle, "home/profile")
 }
 
 @Composable
@@ -229,7 +243,8 @@ fun JetsnackBottomNavigationItem(
     animSpec: AnimationSpec<Float>,
     modifier: Modifier = Modifier
 ) {
-    val animationProgress by animateFloatAsState(if (selected) 1f else 0f, animSpec, label = "")
+    // Animate the icon/text positions within the item based on selection
+    val animationProgress by animateFloatAsState(if (selected) 1f else 0f, animSpec)
     JetsnackBottomNavItemLayout(
         icon = icon,
         text = text,
@@ -247,7 +262,8 @@ private fun JetsnackBottomNavItemLayout(
     @FloatRange(from = 0.0, to = 1.0) animationProgress: Float,
     modifier: Modifier = Modifier
 ) {
-    Layout(modifier = modifier,
+    Layout(
+        modifier = modifier,
         content = {
             Box(
                 modifier = Modifier
@@ -256,16 +272,20 @@ private fun JetsnackBottomNavItemLayout(
                 content = icon
             )
             val scale = lerp(0.6f, 1f, animationProgress)
-            Box(modifier = Modifier
-                .layoutId("text")
-                .padding(horizontal = TextIconSpacing)
-                .graphicsLayer {
-                    alpha = animationProgress
-                    scaleX = scale
-                    scaleY = scale
-                    transformOrigin = BottomNavLabelTransformOrigin
-                })
-        }) { measurables, constraints ->
+            Box(
+                modifier = Modifier
+                    .layoutId("text")
+                    .padding(horizontal = TextIconSpacing)
+                    .graphicsLayer {
+                        alpha = animationProgress
+                        scaleX = scale
+                        scaleY = scale
+                        transformOrigin = BottomNavLabelTransformOrigin
+                    },
+                content = text
+            )
+        }
+    ) { measurables, constraints ->
         val iconPlaceable = measurables.first { it.layoutId == "icon" }.measure(constraints)
         val textPlaceable = measurables.first { it.layoutId == "text" }.measure(constraints)
 
@@ -286,8 +306,8 @@ private fun MeasureScope.placeTextAndIcon(
     height: Int,
     @FloatRange(from = 0.0, to = 1.0) animationProgress: Float
 ): MeasureResult {
-    val iconY = (height - iconPlaceable.height) / 2;
-    val textY = (height - textPlaceable.height) / 2;
+    val iconY = (height - iconPlaceable.height) / 2
+    val textY = (height - textPlaceable.height) / 2
 
     val textWidth = textPlaceable.width * animationProgress
     val iconX = (width - textWidth - iconPlaceable.width) / 2
@@ -303,15 +323,15 @@ private fun MeasureScope.placeTextAndIcon(
 
 @Composable
 private fun JetsnackBottomNavIndicator(
-    stokeWidth: Dp = 2.dp,
+    strokeWidth: Dp = 2.dp,
     color: Color = JetsnackTheme.colors.iconInteractive,
     shape: Shape = BottomNavIndicatorShape
 ) {
     Spacer(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .then(BottomNavigationItemPadding)
-            .border(stokeWidth, color, shape)
+            .border(strokeWidth, color, shape)
     )
 }
 

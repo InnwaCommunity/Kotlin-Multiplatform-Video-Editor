@@ -62,4 +62,5 @@ dependencies {
     implementation(libs.androidx.animation)
     implementation(libs.coil.compose)
     implementation(libs.androidx.ui.util)
+    implementation(libs.androidx.constraintlayout.compose)
 }
