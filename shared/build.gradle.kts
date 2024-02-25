@@ -26,15 +26,11 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
+            implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material)
-            implementation("org.jetbrains.compose.components:components-resources:1.6.0-dev1275")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-
-            // Kotlin Coroutines 1.7.1 contains Dispatchers.IO for iOS
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -43,13 +39,6 @@ kotlin {
             api("androidx.activity:activity-compose:1.7.2")
             api("androidx.appcompat:appcompat:1.6.1")
             api("androidx.core:core-ktx:1.10.1")
-            implementation("androidx.camera:camera-camera2:1.2.3")
-            implementation("androidx.camera:camera-lifecycle:1.2.3")
-            implementation("androidx.camera:camera-view:1.2.3")
-            implementation("com.google.accompanist:accompanist-permissions:0.29.2-rc")
-            implementation("com.google.android.gms:play-services-maps:18.1.0")
-            implementation("com.google.android.gms:play-services-location:21.0.1")
-            implementation("com.google.maps.android:maps-compose:2.11.2")
         }
     }
 }
