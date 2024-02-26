@@ -1,4 +1,5 @@
 package com.manage.videoeditor.core
 
-class Settings {
+class Settings(val defaultFeedUrls: Set<String>) {
+    fun isDefault(feedUrl: String) = defaultFeedUrls.contains(feedUrl)
 }

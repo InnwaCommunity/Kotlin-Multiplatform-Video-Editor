@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.orgJetbrainsCompose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -12,7 +12,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -26,19 +26,29 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
+            //Network
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.logging)
+            //Coroutines
+            implementation(libs.kotlinx.coroutines.core)
+            //Logger
+            implementation(libs.napier)
+            //JSON
+            implementation(libs.kotlinx.serialization.json)
+            //Key-Value storage
+            implementation(libs.multiplatform.settings)
+            // DI
+            api(libs.koin.core)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
+
         androidMain.dependencies {
-            api("androidx.activity:activity-compose:1.7.2")
-            api("androidx.appcompat:appcompat:1.6.1")
-            api("androidx.core:core-ktx:1.10.1")
+            //Network
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        iosMain.dependencies {
+            //Network
+            implementation(libs.ktor.client.ios)
         }
     }
 }
@@ -58,5 +68,8 @@ android {
     }
     kotlin {
         jvmToolchain(17)
+    }
+    dependencies {
+        coreLibraryDesugaring(libs.desugar.jdk.libs)
     }
 }

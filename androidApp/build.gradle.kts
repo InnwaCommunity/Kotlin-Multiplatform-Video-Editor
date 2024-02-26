@@ -17,7 +17,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
     packaging {
         resources {
@@ -39,10 +39,26 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
-    implementation(libs.androidx.activity.compose)
-    debugImplementation(libs.compose.ui.tooling)
+    implementation(project(":shared"))
+    //desugar utils
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    //Compose
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material)
+    //Compose Utils
+    implementation(libs.coil.compose)
+    implementation(libs.activity.compose)
+    implementation(libs.accompanist.swiperefresh)
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    //DI
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    //Navigation
+    implementation(libs.voyager.navigator)
+    //WorkManager
+    implementation(libs.work.runtime.ktx)
 }
