@@ -43,4 +43,6 @@ class RssReader internal constructor(
 
     private suspend fun <A, B> Iterable<A>.mapAsync(f: suspend (A) -> B): List<B> =
         coroutineScope { map { async { f(it) } }.awaitAll() }
+
+    companion object
 }
