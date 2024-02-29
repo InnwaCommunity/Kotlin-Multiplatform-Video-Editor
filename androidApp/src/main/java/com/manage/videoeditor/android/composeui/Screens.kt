@@ -58,7 +58,7 @@ class MainScreen : Screen, KoinComponent {
                     .statusBarsPadding(),
                 refreshing = state.progress,
                 state = refreshState,
-                scale = true
+                scale = true //https://github.com/google/accompanist/issues/572
             )
         }
     }
@@ -68,6 +68,6 @@ class FeedListScreen : Screen, KoinComponent {
     @Composable
     override fun Content() {
         val store: FeedStore by inject()
-        FeedList
+        FeedList(store = store)
     }
 }
