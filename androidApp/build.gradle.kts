@@ -40,26 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
-    //desugar utils
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
-    //Compose
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material)
-    //Compose Utils
-    implementation(libs.coil.compose)
+    api(project(":shared"))
+    implementation(libs.material)
     implementation(libs.activity.compose)
-    implementation(libs.accompanist.swiperefresh)
-    //Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-    //DI
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
-    //Navigation
-    implementation(libs.voyager.navigator)
-    //WorkManager
-    implementation(libs.work.runtime.ktx)
 }

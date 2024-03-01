@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.composeFull)
 }
 
 kotlin {
@@ -26,29 +26,20 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //Network
-            implementation(libs.ktor.core)
-            implementation(libs.ktor.logging)
-            //Coroutines
+            api(compose.runtime)
+
             implementation(libs.kotlinx.coroutines.core)
-            //Logger
-            implementation(libs.napier)
-            //JSON
-            implementation(libs.kotlinx.serialization.json)
-            //Key-Value storage
-            implementation(libs.multiplatform.settings)
-            // DI
+
             api(libs.koin.core)
+            implementation(libs.koin.compose)
+
+            implementation(libs.precompose)
         }
 
         androidMain.dependencies {
-            //Network
-            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
-            //Network
-            implementation(libs.ktor.client.ios)
         }
     }
 }
@@ -68,8 +59,5 @@ android {
     }
     kotlin {
         jvmToolchain(17)
-    }
-    dependencies {
-        coreLibraryDesugaring(libs.desugar.jdk.libs)
     }
 }

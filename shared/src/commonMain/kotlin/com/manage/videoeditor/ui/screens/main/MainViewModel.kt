@@ -1,4 +1,6 @@
 package com.manage.videoeditor.ui.screens.main
 
-class MainViewModel {
+import com.manage.videoeditor.domain.repositories.SettingsRepository
+
+class MainViewModel(private val settingsRepository: SettingsRepository) {
 }
