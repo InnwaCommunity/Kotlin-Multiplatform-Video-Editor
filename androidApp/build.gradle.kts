@@ -15,10 +15,9 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packaging {
         resources {
@@ -40,10 +39,10 @@ android {
 }
 
 dependencies {
-    api(project(":shared"))
-    implementation(libs.material)
-
-    // Koin-Dependency injection
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
+    implementation(projects.shared)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    implementation(libs.androidx.activity.compose)
+    debugImplementation(libs.compose.ui.tooling)
 }

@@ -1,9 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeFull)
-    alias(libs.plugins.kotlinX.serialization.plugin)
-    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -14,7 +11,7 @@ kotlin {
             }
         }
     }
-
+    
     listOf(
         iosX64(),
         iosArm64(),
@@ -28,23 +25,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(compose.runtime)
-            api(compose.material3)
-
-            implementation(libs.kotlinx.coroutines.core)
-
-            api(libs.ktor.client.core)
-
-            api(libs.koin.core)
-            implementation(libs.koin.compose)
-
-            implementation(libs.precompose)
+            //put your multiplatform dependencies here
         }
-
-        androidMain.dependencies {
-        }
-
-        iosMain.dependencies {
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }
@@ -52,17 +36,11 @@ kotlin {
 android {
     namespace = "com.manage.videoeditor"
     compileSdk = 34
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
     defaultConfig {
         minSdk = 24
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlin {
-        jvmToolchain(17)
     }
 }
