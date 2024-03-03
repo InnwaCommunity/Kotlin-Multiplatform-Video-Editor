@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeFull)
+    alias(libs.plugins.kotlinX.serialization.plugin)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -27,8 +29,11 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(compose.runtime)
+            api(compose.material3)
 
             implementation(libs.kotlinx.coroutines.core)
+
+            api(libs.ktor.client.core)
 
             api(libs.koin.core)
             implementation(libs.koin.compose)

@@ -4,12 +4,15 @@ plugins {
     alias(libs.plugins.androidLibrary).apply(false)
     alias(libs.plugins.kotlinAndroid).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
+
+    alias(libs.plugins.composeFull) apply false
 }
 
 allprojects {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://jitpack.io")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }

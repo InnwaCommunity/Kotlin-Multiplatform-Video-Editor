@@ -9,6 +9,10 @@ kotlinx-coroutines-core = "1.8.0"
 koin-core = "3.6.0-wasm-alpha2"
 koin-compose = "3.6.0-wasm-alpha2"
 precompose = "1.6.0-beta02"
+koin-android = "3.6.0-wasm-alpha2"
+koin-androidx-compose = "3.6.0-wasm-alpha2"
+ktor-client-core = "3.0.0-beta-1"
+buildKonfig = "0.13.3"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -17,10 +21,16 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin-core" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin-compose" }
 precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin-android" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin-androidx-compose" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-client-core" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+nativeCocoapod = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+kotlinX-serialization-plugin = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 composeFull = { id = "org.jetbrains.compose", version.ref = "compose-full" }
+buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }

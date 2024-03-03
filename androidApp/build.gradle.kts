@@ -42,5 +42,8 @@ android {
 dependencies {
     api(project(":shared"))
     implementation(libs.material)
-    implementation(libs.activity.compose)
+
+    // Koin-Dependency injection
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 }
