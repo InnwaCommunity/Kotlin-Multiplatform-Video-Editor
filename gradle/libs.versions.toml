@@ -5,6 +5,11 @@ compose = "1.5.4"
 compose-compiler = "1.5.4"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
+multidex = "2.0.1"
+appcompat = "1.7.0-alpha03"
+material = "1.7.0-alpha03"
+navigationCompose = "2.8.0-alpha03"
+uiToolingPreview = "1.7.0-alpha03"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -14,6 +19,11 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "uiToolingPreview" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

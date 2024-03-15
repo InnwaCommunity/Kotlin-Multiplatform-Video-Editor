@@ -44,5 +44,10 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.androidx.multidex)
 }
