@@ -8,10 +8,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Process
+import android.util.Log
 import androidx.preference.PreferenceManager
 import com.keyboard.myanglish.daemon.MyanDaemon
 import com.keyboard.myanglish.data.clipboard.ClipboardManager
 import com.keyboard.myanglish.data.prefs.AppPrefs
+import com.keyboard.myanglish.data.theme.ThemeManager
 import com.keyboard.myanglish.utils.AppUtil
 import com.keyboard.myanglish.utils.startActivity
 import com.keyboard.myanglish.utils.userManager
@@ -20,6 +22,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.plus
 import timber.log.Timber
 import java.lang.IllegalStateException
+import kotlin.system.exitProcess
 
 class MyanApplication : Application() {
 
@@ -36,7 +39,7 @@ class MyanApplication : Application() {
     }
 
     private val unlockReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context?, intent: Intent) {
             if (intent.action != Intent.ACTION_USER_UNLOCKED) return
             if (!isDirectBootMode) return
             Timber.d("Device unlocked, app will exit now and restart to normal mode")
@@ -51,8 +54,8 @@ class MyanApplication : Application() {
         private set
 
     val directBootAwareContext: Context
-    @SuppressLint("NewApi")
-    get() = if(isDirectBootMode) createDeviceProtectedStorageContext() else applicationContext
+        @SuppressLint("NewApi")
+        get() = if (isDirectBootMode) createDeviceProtectedStorageContext() else applicationContext
 
     override fun onCreate() {
         super.onCreate()
@@ -62,8 +65,44 @@ class MyanApplication : Application() {
         }
         val ctx = directBootAwareContext
 
-        Timber.d("isDirectBootMode=$isDirectBootMode")
+//        if (!BuildConfig.DEBUG) {
+//            Thread.setDefaultUncaughtExceptionHandler { _, e ->
+//                startActivity<LogActivity> {
+//                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    putExtra(LogActivity.FROM_CRASH, true)
+//                    // avoid transaction overflow
+//                    val truncated = e.stackTraceToString().let {
+//                        if (it.length > MAX_STACKTRACE_SIZE)
+//                            it.take(MAX_STACKTRACE_SIZE) + "<truncated>"
+//                        else
+//                            it
+//                    }
+//                    putExtra(LogActivity.CRASH_STACK_TRACE, truncated)
+//                }
+//                exitProcess(10)
+//            }
+//        }
+
+        instance = this
+        // we don't have AppPrefs available yet
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(ctx)
+        if (BuildConfig.DEBUG || sharedPrefs.getBoolean("verbose_log", false)) {
+            Timber.plant(object : Timber.DebugTree() {
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                    super.log(priority, "[${Thread.currentThread().name}] $tag", message, t)
+                }
+            })
+        } else {
+            Timber.plant(object : Timber.Tree() {
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                    if (priority < Log.INFO) return
+                    Log.println(priority, "[${Thread.currentThread().name}]", message)
+                }
+            })
+        }
+
+        Timber.d("isDirectBootMode=$isDirectBootMode")
+
         AppPrefs.init(sharedPrefs)
         // record last pid for crash logs
         AppPrefs.getInstance().internal.pid.apply {
@@ -72,7 +111,14 @@ class MyanApplication : Application() {
             Timber.d("Last pid is $lastPid. Set it to current pid: $currentPid")
             setValue(currentPid)
         }
-        ClipboardManager.init
+        ClipboardManager.init(ctx)
+        ThemeManager.init(resources.configuration)
+//        Locales.onLocaleChange(resources.configuration)
+        registerReceiver(shutdownReceiver, IntentFilter(Intent.ACTION_SHUTDOWN))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !isDirectBootMode) {
+            AppPrefs.getInstance().syncToDeviceEncryptedStorage()
+            ThemeManager.syncToDeviceEncryptedStorage()
+        }
     }
 
     companion object {

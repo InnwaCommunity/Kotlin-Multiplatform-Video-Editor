@@ -29,7 +29,7 @@ object ClipboardManager : ClipboardManager.OnPrimaryClipChangedListener,
         private set
 
     private suspend fun updateItemCount() {
-
+        itemCount = clbDao.itemCount()
     }
 
     private val onUpdateListeners = WeakHashSet<OnClipboardUpdateListener>()
@@ -69,7 +69,7 @@ object ClipboardManager : ClipboardManager.OnPrimaryClipChangedListener,
         enablePref.registerOnChangeListener(enableListener)
         limitListener.onChange(limitPref.key, limitPref.getValue())
         limitPref.registerOnChangeListener(limitListener)
-        launch { upda }
+        launch { updateItemCount() }
     }
 
     override fun onPrimaryClipChanged() {

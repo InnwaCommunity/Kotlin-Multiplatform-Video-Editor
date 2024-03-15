@@ -5,7 +5,8 @@ import androidx.room.Query
 
 @Dao
 interface ClipboardDao {
-    @Query("SELECT COUTN")
+    @Query("SELECT COUNT(*) FROM ${ClipboardEntry.TABLE_NAME} WHERE deleted = 0")
+    suspend fun itemCount(): Int
 
     @Query("SELECT * FROM ${ClipboardEntry.TABLE_NAME} WHERE pinned=0 AND deleted=0")
     suspend fun getAllUnpinned(): List<ClipboardEntry>

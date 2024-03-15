@@ -1,5 +1,6 @@
 package com.keyboard.myanglish.data.clipboard.db
 
+import android.content.ClipData
 import android.content.ClipDescription
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -20,5 +21,16 @@ data class ClipboardEntry(
 ) {
     companion object {
         const val TABLE_NAME = "clipboard"
+
+        fun fromClipData(
+            clipData: ClipData,
+            transformer: ((String) -> String)? = null
+        ): ClipboardEntry? {
+            val str = clipData.getItemAt(0).text?.toString() ?: return null
+            return ClipboardEntry(
+                text = transformer?.let { it(str) } ?: str,
+                type = clipData.description.getMimeType(0)
+            )
+        }
     }
 }

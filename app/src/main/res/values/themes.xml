@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Myanglish" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Myanglish" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorLogFatal">@color/red_A700</item>
+        <item name="colorLogError">@color/red_400</item>
+        <item name="colorLogWarning">@color/yellow_800</item>
+        <item name="colorLogInfo">@color/blue_500</item>
+        <item name="colorLogDebug">@color/grey_700</item>
+        <item name="colorLogVerbose">@color/grey_700</item>
+    </style>
 </resources>

@@ -17,14 +17,43 @@
         android:theme="@style/Theme.Myanglish"
         tools:targetApi="31">
         <activity
+            android:name=".ui.setup.SetupActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Myanglish">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.dict" />
+                <data android:pathPattern=".*\\..*\\.dict" />
+                <data android:pathPattern=".*\\..*\\..*\\.dict" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.dict" />
+                <data android:pathPattern=".*\\.scel" />
+                <data android:pathPattern=".*\\..*\\.scel" />
+                <data android:pathPattern=".*\\..*\\..*\\.scel" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.scel" />
+                <data android:pathPattern=".*\\.txt" />
+                <data android:pathPattern=".*\\..*\\.txt" />
+                <data android:pathPattern=".*\\..*\\..*\\.txt" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.txt" />
             </intent-filter>
         </activity>
     </application>
