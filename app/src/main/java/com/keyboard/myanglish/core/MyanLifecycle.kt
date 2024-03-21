@@ -5,7 +5,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import java.lang.IllegalStateException
 import java.util.concurrent.ConcurrentLinkedDeque
+import kotlin.coroutines.Continuation
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class MyanLifecycleRegistry : MyanLifecycle {
     private val observers = ConcurrentLinkedDeque<MyanLifecycleObserver>()
@@ -83,6 +86,9 @@ interface MyanLifecycleOwner {
     val lifecycle: MyanLifecycle
 }
 
+val MyanLifecycleOwner.lifeCycleScope
+    get() = lifecycle.lifecycleScope
+
 fun interface MyanLifecycleObserver {
     fun onStateChanged(event: MyanLifecycle.Event)
 }
@@ -97,4 +103,34 @@ class MyanLifecycleCoroutineScope(
         }
     }
 
+}
+
+suspend fun <T> MyanLifecycle.whenAtState(
+    state: MyanLifecycle.State,
+    block: suspend CoroutineScope.() -> T
+): T =
+    if (state == currentState) block(lifecycleScope)
+    else AtStateHelper(this, state).run(block)
+
+suspend inline fun <T> MyanLifecycle.whenReady(noinline block: suspend CoroutineScope.() -> T) =
+    whenAtState(MyanLifecycle.State.READY, block)
+
+
+private class AtStateHelper(val lifecycle: MyanLifecycle, val state: MyanLifecycle.State) {
+    private val observer = MyanLifecycleObserver {
+        if (lifecycle.currentState == state)
+            continuation?.resume(Unit)
+    }
+
+    init {
+        lifecycle.addObserver(observer)
+    }
+
+    private var continuation: Continuation<Unit>? = null
+
+    suspend fun <T> run(block: suspend CoroutineScope.() -> T): T {
+        suspendCoroutine { continuation = it }
+        lifecycle.removeObserver(observer)
+        return block(lifecycle.lifecycleScope)
+    }
 }

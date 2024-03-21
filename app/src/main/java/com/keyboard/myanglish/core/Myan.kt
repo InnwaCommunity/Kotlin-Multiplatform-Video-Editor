@@ -10,12 +10,27 @@ import timber.log.Timber
 class Myan(private val context: Context) : MyanAPI, MyanLifecycleOwner {
     private val lifecycleRegistry = MyanLifecycleRegistry()
 
+    override val isReady: Boolean
+        get() = lifecycle.currentState == MyanLifecycle.State.READY
+
     override suspend fun save() {
         TODO("Not yet implemented")
     }
 
+    override suspend fun availableIme(): Array<InputMethodEntry> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun enabledIme(): Array<InputMethodEntry> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addons(): Array<AddonInfo> {
+        TODO("Not yet implemented")
+    }
+
     override val lifecycle: MyanLifecycle
-        get() = lifecycle
+        get() = lifecycleRegistry
 
     private suspend fun setClipboard(string: String) = withMyanContext { setMyanClipboard(string) }
 
@@ -51,6 +66,10 @@ class Myan(private val context: Context) : MyanAPI, MyanLifecycleOwner {
     @Keep
     private val onClipboardUpdate = ClipboardManager.OnClipboardUpdateListener {
         lifecycle.lifecycleScope.launch { setClipboard(it.text) }
+    }
+
+    fun start() {
+
     }
 
     fun stop() {

@@ -89,31 +89,12 @@ class MainActivity : AppCompatActivity() {
         if (intent?.action == Intent.ACTION_MAIN && SetupActivity.shouldShowUp()) {
             startActivity<SetupActivity>()
         } else {
-            processIntent(intent)
+//            processIntent(intent)
         }
         addOnNewIntentListener {
-            processIntent(it)
+//            processIntent(it)
         }
         checkNotificationPermission()
-    }
-
-    private fun processIntent(intent: Intent?) {
-        if (intent?.action == Intent.ACTION_MAIN) {
-            intent.data?.let {
-                AlertDialog.Builder(this)
-                    .setTitle(R.string.pinyin_dict)
-                    .setMessage(R.string.whether_import_dict)
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        navController.popBackStack(R.id.mainFragment, false)
-                        navController.navigate(
-                            R.id.action_mainFragment_to_globalConfigFragment,
-                            bundleOf(PinyinDictionaryFragment.INTENT_DATA_URI to it)
-                        )
-                    }
-                    .show()
-            }
-        }
     }
 
     private var needNotifications by AppPrefs.getInstance().internal.needNotifications
@@ -141,5 +122,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 .show()
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != 0) return
+        // do not ask again if user denied the request
+        needNotifications = grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED
     }
 }
