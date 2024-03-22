@@ -45,6 +45,16 @@ fun PreferenceGroup.addPreference(
 
 fun PreferenceGroup.addPreference(
     @StringRes title: Int,
+    summary: String,
+    @DrawableRes icon: Int? = null,
+    onClick: (() -> Unit)? = null
+) {
+    val ctx = context
+    addPreference(ctx.getString(title), summary, icon, onClick)
+}
+
+fun PreferenceGroup.addPreference(
+    @StringRes title: Int,
     @StringRes summary: Int? = null,
     @DrawableRes icon: Int? = null,
     onClick: (() -> Unit)? = null

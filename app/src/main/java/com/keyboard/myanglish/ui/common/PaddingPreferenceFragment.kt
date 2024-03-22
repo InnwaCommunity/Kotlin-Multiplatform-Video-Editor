@@ -8,6 +8,7 @@ import com.keyboard.myanglish.ui.main.modified.MyPreferenceFragment
 import com.keyboard.myanglish.utils.applyNavBarInsetsBottomPadding
 
 abstract class PaddingPreferenceFragment : MyPreferenceFragment() {
+
     @CallSuper
     override fun onCreateView(
         inflater: LayoutInflater,

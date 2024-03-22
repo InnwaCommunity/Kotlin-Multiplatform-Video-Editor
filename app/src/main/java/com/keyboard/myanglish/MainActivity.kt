@@ -127,6 +127,13 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
             }
+            add(R.string.developer).apply {
+                aboutMenus.add(this)
+                setOnMenuItemClickListener {
+                    navController.navigate(R.id.action_mainFragment_to_developerFragment)
+                    true
+                }
+            }
         }
         return true
     }

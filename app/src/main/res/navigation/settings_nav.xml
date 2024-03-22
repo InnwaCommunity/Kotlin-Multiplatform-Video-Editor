@@ -28,6 +28,13 @@
             app:exitAnim="@animator/nav_default_exit_anim"
             app:popEnterAnim="@animator/nav_default_pop_enter_anim"
             app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_developerFragment"
+            app:destination="@id/developerFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -46,18 +53,19 @@
     <fragment
         android:id="@+id/addonListFragment"
         android:name="com.keyboard.myanglish.ui.main.settings.addon.AddonListFragment"
-        android:label="@string/addons_conf">
-    </fragment>
+        android:label="@string/addons_conf" />
 
     <fragment
         android:id="@+id/imConfigFragment"
-        android:name="com.keyboard.myanglish.ui.main.settings.im.InputMethodConfigFragment">
-    </fragment>
+        android:name="com.keyboard.myanglish.ui.main.settings.im.InputMethodConfigFragment" />
 
     <fragment
         android:id="@+id/themeFragment"
         android:name="com.keyboard.myanglish.ui.main.settings.ThemeFragment"
-        android:label="@string/theme">
-    </fragment>
+        android:label="@string/theme" />
+    <fragment
+        android:id="@+id/developerFragment"
+        android:name="com.keyboard.myanglish.ui.main.DeveloperFragment"
+        android:label="@string/developer" />
 
 </navigation>
