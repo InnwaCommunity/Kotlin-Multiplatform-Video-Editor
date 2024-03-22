@@ -12,6 +12,8 @@ class MainViewModel : ViewModel() {
 
     val toolbarShadow = MutableLiveData(true)
 
+    val toolbarSaveButtonOnClickListener = MutableLiveData<(() -> Unit)?>()
+
     val toolbarEditButtonVisible = MutableLiveData(false)
 
     val toolbarEditButtonOnClickListener = MutableLiveData<(() -> Unit)?>()
@@ -30,7 +32,7 @@ class MainViewModel : ViewModel() {
         toolbarShadow.value = true
     }
 
-    fun enableToolbarEditButton(visible:Boolean = true, onClick: () -> Unit) {
+    fun enableToolbarEditButton(visible: Boolean = true, onClick: () -> Unit) {
         toolbarEditButtonOnClickListener.value = onClick
         toolbarEditButtonVisible.value = visible
     }

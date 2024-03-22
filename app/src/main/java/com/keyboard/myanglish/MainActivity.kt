@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,6 +37,8 @@ import com.keyboard.myanglish.ui.setup.SetupActivity
 import com.keyboard.myanglish.ui.theme.MyanglishTheme
 import com.keyboard.myanglish.utils.startActivity
 import splitties.dimensions.dp
+import splitties.resources.drawable
+import splitties.resources.styledColor
 import splitties.views.topPadding
 
 class MainActivity : AppCompatActivity() {
@@ -97,6 +101,26 @@ class MainActivity : AppCompatActivity() {
         checkNotificationPermission()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.apply {
+            add(R.string.save).apply {
+                icon = drawable(R.drawable.ic_baseline_save_24)!!.apply {
+                    setTint(styledColor(android.R.attr.colorControlNormal))
+                }
+                setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+                viewModel.toolbarSaveButtonOnClickListener.apply {
+                    observe(this@MainActivity) { listener -> isVisible = listener != null }
+                    setValue(value)
+                }
+                setOnMenuItemClickListener {
+                    viewModel.toolbarSaveButtonOnClickListener.value?.invoke()
+                    true
+                }
+            }
+        }
+        return true
+    }
+
     private var needNotifications by AppPrefs.getInstance().internal.needNotifications
 
     private fun checkNotificationPermission() {
@@ -133,5 +157,12 @@ class MainActivity : AppCompatActivity() {
         if (requestCode != 0) return
         // do not ask again if user denied the request
         needNotifications = grantResults.getOrNull(0) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onStop() {
+        viewModel.myan.runIfReady {
+            save()
+        }
+        super.onStop()
     }
 }
