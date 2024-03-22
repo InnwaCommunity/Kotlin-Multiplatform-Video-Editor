@@ -3,6 +3,7 @@ package com.keyboard.myanglish
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -35,6 +36,7 @@ import com.keyboard.myanglish.ui.main.MainViewModel
 import com.keyboard.myanglish.ui.main.settings.PinyinDictionaryFragment
 import com.keyboard.myanglish.ui.setup.SetupActivity
 import com.keyboard.myanglish.ui.theme.MyanglishTheme
+import com.keyboard.myanglish.utils.Const
 import com.keyboard.myanglish.utils.startActivity
 import splitties.dimensions.dp
 import splitties.resources.drawable
@@ -114,6 +116,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 setOnMenuItemClickListener {
                     viewModel.toolbarSaveButtonOnClickListener.value?.invoke()
+                    true
+                }
+            }
+            val aboutMenus = mutableListOf<MenuItem>()
+            add(R.string.faq).apply {
+                aboutMenus.add(this)
+                setOnMenuItemClickListener {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Const.faqUrl)))
                     true
                 }
             }
